@@ -101,6 +101,12 @@ export function BucketList({ initialItems, currentUserId }: BucketListProps) {
     await supabase.from("bucket_items").delete().eq("id", id);
   };
 
+  const handleClearAll = async () => {
+    if (!confirm("Clear all ideas?")) return;
+    setItems([]);
+    await supabase.from("bucket_items").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+  };
+
   const handleRollRandom = () => {
     const uncompleted = items.filter((i) => !i.is_completed);
     if (uncompleted.length === 0) return;
@@ -144,6 +150,15 @@ export function BucketList({ initialItems, currentUserId }: BucketListProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          {items.length > 0 && (
+            <button
+              onClick={handleClearAll}
+              className="py-2.5 px-3 rounded-2xl border border-[var(--line-hairline)] text-[var(--text-muted)] hover:text-[var(--accent-rose)] font-bold text-xs transition-all cursor-pointer"
+              title="Clear all ideas"
+            >
+              Clear All
+            </button>
+          )}
           <button
             onClick={handleRollRandom}
             className="py-2.5 px-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-400 hover:from-amber-600 hover:to-orange-500 text-white font-extrabold text-xs shadow-sm flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
@@ -245,6 +260,13 @@ export function BucketList({ initialItems, currentUserId }: BucketListProps) {
             </button>
           </div>
         ))}
+        {filteredItems.length === 0 && (
+          <div className="p-8 text-center rounded-2xl border border-dashed border-[var(--line-hairline)] bg-[var(--bg-subtle)]">
+            <Heart className="w-8 h-8 mx-auto text-[var(--accent-gold)] opacity-40 mb-2" />
+            <p className="text-sm font-semibold text-[var(--text-secondary)]">No ideas yet</p>
+            <p className="text-xs text-[var(--text-muted)] mt-1">Tap &ldquo;Add Idea&rdquo; to start your shared couple adventures!</p>
+          </div>
+        )}
       </div>
 
       {/* Random Date Picker Modal */}

@@ -365,10 +365,13 @@ html, body {
   line-height: 1.15;
 }
 
-.brand-title {
+.brand-title,
+.brand-name {
   font-weight: 700;
   font-size: 0.98rem;
   letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
 }
 
 .brand-sub {
@@ -816,10 +819,12 @@ main.app-shell {
   color: var(--text-muted);
 }
 
-.countdown-row {
+.countdown-row,
+.countdowns-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 18px 0;
 }
 
 .countdown-card {

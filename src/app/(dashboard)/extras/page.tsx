@@ -20,10 +20,11 @@ export default async function ExtrasPage() {
   const partnerName = isUser1 ? settings?.user2_name || "Jeehan" : settings?.user1_name || "Adji";
   const partnerId = isUser1 ? settings?.user2_id || "" : settings?.user1_id || "";
 
-  // 1. Fetch Bucket Items
+  // 1. Fetch Bucket Items (exclude pre-seeded dummy ideas)
   const { data: bucketData } = await supabase
     .from("bucket_items")
     .select("*")
+    .not("created_by", "is", null)
     .order("created_at", { ascending: false });
 
   // 2. Fetch today's question

@@ -38,7 +38,7 @@ export function Countdowns({ startDate }: CountdownsProps) {
     d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
 
   return (
-    <div className="countdowns-grid">
+    <div className="countdowns-grid grid grid-cols-1 md:grid-cols-2 gap-5 my-5">
       {/* Yearly Milestone Card */}
       <div className="arch-card countdown-card relative">
         <svg className="leaf-flourish lf-tr" viewBox="0 0 24 24" aria-hidden="true">
