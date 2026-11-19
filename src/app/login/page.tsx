@@ -119,9 +119,9 @@ export default function LoginPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleQuickSelect(email && email !== "suryaadjii17@gmail.com" ? email : "")}
+                  onClick={() => handleQuickSelect("jehannajwashafira@gmail.com")}
                   className={`py-2.5 px-3 rounded-2xl text-xs font-bold border transition-all text-center flex items-center justify-center gap-2 cursor-pointer ${
-                    email && email !== "suryaadjii17@gmail.com"
+                    email === "jehannajwashafira@gmail.com"
                       ? "primary-btn border-transparent"
                       : "ghost-btn"
                   }`}
