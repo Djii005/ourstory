@@ -122,9 +122,9 @@ export function LetterEditor({
   };
 
   const fontClass = {
-    serif: "font-display",
-    handwriting: "font-script text-xl leading-relaxed",
-    clean: "font-body",
+    serif: "font-display text-lg leading-relaxed",
+    handwriting: "font-script text-2xl leading-relaxed",
+    clean: "font-body text-base leading-relaxed",
   }[fontFamily];
 
   const stationeryTheme = {

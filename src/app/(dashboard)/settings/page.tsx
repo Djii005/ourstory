@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Heart, Calendar, User, Save, LogOut, Check, Sparkles } from "lucide-react";
+import { Heart, Calendar, User, Save, LogOut, Check, Sparkles, Cake } from "lucide-react";
 
 export default function SettingsPage() {
   const [startDate, setStartDate] = useState("2024-01-01");
   const [user1Name, setUser1Name] = useState("Adji");
   const [user2Name, setUser2Name] = useState("Jeehan");
+  const [user1Birthday, setUser1Birthday] = useState("");
+  const [user2Birthday, setUser2Birthday] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
@@ -27,6 +29,8 @@ export default function SettingsPage() {
         setStartDate(data.relationship_start_date || "2024-01-01");
         setUser1Name(data.user1_name || "Adji");
         setUser2Name(data.user2_name || "Jeehan");
+        setUser1Birthday(data.user1_birthday || "");
+        setUser2Birthday(data.user2_birthday || "");
       }
       setLoading(false);
     }
@@ -45,6 +49,8 @@ export default function SettingsPage() {
         relationship_start_date: startDate,
         user1_name: user1Name.trim(),
         user2_name: user2Name.trim(),
+        user1_birthday: user1Birthday || null,
+        user2_birthday: user2Birthday || null,
         updated_at: new Date().toISOString(),
       })
       .eq("id", 1);
@@ -132,6 +138,45 @@ export default function SettingsPage() {
               className="w-full px-4 py-3 rounded-2xl border border-rose-200 bg-white/80 text-stone-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-rose-400/50 shadow-xs"
             />
           </div>
+        </div>
+
+        {/* Birthday Tracker Settings */}
+        <div className="pt-2 border-t border-[var(--line-hairline)] space-y-3">
+          <div className="flex items-center gap-2">
+            <Cake className="w-4 h-4 text-[var(--accent-rose)]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)]">
+              Birthday Tracker Dates
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-[var(--text-secondary)] mb-1.5">
+                {user1Name}&apos;s Birthday
+              </label>
+              <input
+                type="date"
+                value={user1Birthday}
+                onChange={(e) => setUser1Birthday(e.target.value)}
+                className="w-full px-4 py-3 rounded-2xl border border-[var(--line-hairline)] bg-[var(--bg-elevated)] text-[var(--text-primary)] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-rose-400/50 shadow-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-[var(--text-secondary)] mb-1.5">
+                {user2Name}&apos;s Birthday
+              </label>
+              <input
+                type="date"
+                value={user2Birthday}
+                onChange={(e) => setUser2Birthday(e.target.value)}
+                className="w-full px-4 py-3 rounded-2xl border border-[var(--line-hairline)] bg-[var(--bg-elevated)] text-[var(--text-primary)] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-rose-400/50 shadow-xs"
+              />
+            </div>
+          </div>
+          <p className="text-[11px] text-[var(--text-muted)] font-medium">
+            Powers the live birthday countdown, milestone age calculation, and celebratory confetti.
+          </p>
         </div>
 
         {savedSuccess && (

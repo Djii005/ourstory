@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -21,6 +21,13 @@ const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -54,7 +61,7 @@ export default function RootLayout({
       lang="en"
       data-theme="light"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)] font-sans selection:bg-rose-200 selection:text-rose-900 overflow-x-hidden">
         {children}

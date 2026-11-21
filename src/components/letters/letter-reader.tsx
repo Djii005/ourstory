@@ -78,10 +78,10 @@ export function LetterReader({
   };
 
   const fontClass = {
-    handwriting: "font-script text-2xl leading-relaxed",
-    serif: "font-display text-lg leading-loose",
+    handwriting: "font-script text-2xl sm:text-3xl leading-relaxed",
+    serif: "font-display text-lg sm:text-xl leading-loose",
     clean: "font-body text-base leading-relaxed",
-  }[letter.font_family] || "font-script text-2xl";
+  }[letter.font_family] || "font-script text-2xl leading-relaxed";
 
   const stationeryTheme = {
     classic: "stationery-classic",

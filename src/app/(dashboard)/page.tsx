@@ -31,7 +31,13 @@ export default async function TrackerHomePage() {
         partner2={partner2}
       />
 
-      <Countdowns startDate={startDate} />
+      <Countdowns
+        startDate={startDate}
+        user1Birthday={settings?.user1_birthday}
+        user2Birthday={settings?.user2_birthday}
+        partner1Name={partner1}
+        partner2Name={partner2}
+      />
 
       <MilestoneBadges startDate={startDate} />
 

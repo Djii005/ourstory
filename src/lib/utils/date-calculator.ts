@@ -125,3 +125,64 @@ export function getNextMonthsary(startDateStr: string, now: Date = new Date()): 
     label: "Next Monthsary",
   };
 }
+
+export interface BirthdayCountdownInfo {
+  targetDate: Date;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  label: string;
+  name: string;
+  isToday: boolean;
+  turningAge: number | null;
+  progressPct: number;
+}
+
+export function getNextBirthday(
+  birthdayStr: string | null | undefined,
+  name: string,
+  now: Date = new Date()
+): BirthdayCountdownInfo | null {
+  if (!birthdayStr) return null;
+  const birth = new Date(birthdayStr);
+  if (isNaN(birth.getTime())) return null;
+
+  const currentYear = now.getFullYear();
+  const birthMonth = birth.getMonth();
+  const birthDate = birth.getDate();
+
+  const isToday =
+    now.getMonth() === birthMonth && now.getDate() === birthDate;
+
+  let nextBday = new Date(currentYear, birthMonth, birthDate, 0, 0, 0);
+  const todayStart = new Date(currentYear, now.getMonth(), now.getDate(), 0, 0, 0);
+
+  if (!isToday && nextBday.getTime() < todayStart.getTime()) {
+    nextBday = new Date(currentYear + 1, birthMonth, birthDate, 0, 0, 0);
+  }
+
+  const diffMs = isToday ? 0 : Math.max(0, nextBday.getTime() - now.getTime());
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  const turningAge = nextBday.getFullYear() - birth.getFullYear();
+  const progressPct = isToday
+    ? 100
+    : Math.max(0, Math.min(100, Math.round(((365 - days) / 365) * 100)));
+
+  return {
+    targetDate: nextBday,
+    days,
+    hours,
+    minutes,
+    seconds,
+    label: `${name}'s Birthday`,
+    name,
+    isToday,
+    turningAge: turningAge > 0 ? turningAge : null,
+    progressPct,
+  };
+}
